@@ -11,7 +11,7 @@ workflows:
           CM_KEYSTORE_PATH: /tmp/keystore.keystore
           CM_KEY_ALIAS_USERNAME: Encrypted(Z0FBQUFBQmcxS0hNSjlhM3dySkxIdlJZMnFlcjc2cUwxLXdrTWFiN0N0TVc1SDhiUmZ4U1RsSnFfb29nR3N6aVFwSDJhLVBBeUZySmJsQ3Q4R0tOQzl1RUpYckZuVWhBY0E9PQ==) # <-- Put your encrypted keystore alias username here
           # CODECOV_TOKEN: 53285802-f961-49d3-95f8-a977b7f7d87a
-          CODE_COVERAGE_TARGET: 95
+          CODE_COVERAGE_TARGET: 90
       flutter: stable
       xcode: latest
       cocoapods: default
