@@ -47,3 +47,4 @@ workflows:
       - build/**/outputs/**/*.apk
       - build/**/outputs/**/mapping.txt
       - flutter_drive.log
+      - test-results/flutter.json
