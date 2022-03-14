@@ -1,6 +1,6 @@
 workflows:
   android-workflow:
-    name: Android Workflow
+    name: Android Workflow-test
     instance_type: mac_pro
     max_build_duration: 120
     environment:
