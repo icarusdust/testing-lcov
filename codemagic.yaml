@@ -28,7 +28,8 @@ workflows:
       - name: Testing
         script: |
            HOMEBREW_NO_AUTO_UPDATE=1 brew install lcov
-           flutter test --coverage
+           mkdir -p test-results 
+           flutter test --coverage --machine > test-results/flutter.json  
            code_coverage=$(lcov --list $FCI_BUILD_DIR/coverage/lcov.info | sed -n "s/.*Total:|\(.*\)%.*/\1/p")
            echo "Code Coverage: ${code_coverage}%"
            if (( $(echo "$code_coverage < $CODE_COVERAGE_TARGET" | bc) )); then exit 1; fi  
