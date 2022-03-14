@@ -10,7 +10,7 @@ workflows:
           CM_KEY_ALIAS_PASSWORD: Encrypted(Z0FBQUFBQmcxS0d0RUZ2R0Q2bEMyZGEzMkhhQTlnMXhiYzZCZWE2YzV4U3YzV1dPQW80dTVpU0hXbDAySHNfWXV1TG1jdFgtUWhfbktLbEVWUDFicGN0TFNVLWh1dEpfU0E9PQ==) # <-- Put your encrypted keystore alias password here
           CM_KEYSTORE_PATH: /tmp/keystore.keystore
           CM_KEY_ALIAS_USERNAME: Encrypted(Z0FBQUFBQmcxS0hNSjlhM3dySkxIdlJZMnFlcjc2cUwxLXdrTWFiN0N0TVc1SDhiUmZ4U1RsSnFfb29nR3N6aVFwSDJhLVBBeUZySmJsQ3Q4R0tOQzl1RUpYckZuVWhBY0E9PQ==) # <-- Put your encrypted keystore alias username here
-          # CODECOV_TOKEN: 53285802-f961-49d3-95f8-a977b7f7d87a
+          CODECOV_TOKEN: 53285802-f961-49d3-95f8-a977b7f7d87a
           CODE_COVERAGE_TARGET: 90
       flutter: stable
       xcode: latest
@@ -32,13 +32,14 @@ workflows:
            code_coverage=$(lcov --list $FCI_BUILD_DIR/coverage/lcov.info | sed -n "s/.*Total:|\(.*\)%.*/\1/p")
            echo "Code Coverage: ${code_coverage}%"
            if (( $(echo "$code_coverage < $CODE_COVERAGE_TARGET" | bc) )); then exit 1; fi  
-           coveralls-lcov coverage/lcov.info
+        test_report: test-results/flutter.json
+
       - name: Codecov
         script: |
            #!/bin/bash
            curl -Os https://uploader.codecov.io/latest/macos/codecov
            chmod +x codecov
-           ./codecov -t ${CODECOV_TOKEN} -f "app/build/test-results/**/*.xml"
+           ./codecov -t ${CODECOV_TOKEN} -f "test-results/flutter.json"
 #       - name: Build APK with Flutter  
 #         script: |
 #           cd . && flutter build apk --release --build-name=1.0.0 --build-number=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
