@@ -32,9 +32,16 @@ workflows:
            code_coverage=$(lcov --list $FCI_BUILD_DIR/coverage/lcov.info | sed -n "s/.*Total:|\(.*\)%.*/\1/p")
            echo "Code Coverage: ${code_coverage}%"
            if (( $(echo "$code_coverage < $CODE_COVERAGE_TARGET" | bc) )); then exit 1; fi  
-      - name: Build APK with Flutter  
+           coveralls-lcov coverage/lcov.info
+      - name: Codecov
         script: |
-          cd . && flutter build apk --release --build-name=1.0.0 --build-number=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
+           #!/bin/bash
+           curl -Os https://uploader.codecov.io/latest/macos/codecov
+           chmod +x codecov
+           ./codecov -t ${CODECOV_TOKEN} -f "app/build/test-results/**/*.xml"
+#       - name: Build APK with Flutter  
+#         script: |
+#           cd . && flutter build apk --release --build-name=1.0.0 --build-number=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
     artifacts:
       - build/**/outputs/**/*.apk
       - build/**/outputs/**/mapping.txt
