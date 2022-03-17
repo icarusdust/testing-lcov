@@ -13,7 +13,7 @@ workflows:
           CODECOV_TOKEN: bb85b0f0-1d76-4c55-b9db-1db176d18dd6
           
           
-          CODE_COVERAGE_TARGET: 90
+          CODE_COVERAGE_TARGET: 95
       flutter: stable
       xcode: latest
       cocoapods: default
