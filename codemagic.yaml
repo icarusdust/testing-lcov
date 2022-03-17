@@ -33,12 +33,8 @@ workflows:
            mkdir -p test-results 
            flutter test --coverage --machine > test-results/flutter.json  
            code_coverage=$(lcov --list $FCI_BUILD_DIR/coverage/lcov.info | sed -n "s/.*Total:|\(.*\)%.*/\1/p")
-           if (echo "Code Coverage: ${code_coverage}% " | bc); then { echo "uploading to codecov" }; fi 
-           if (( $(echo "$code_coverage < $CODE_COVERAGE_TARGET" | bc) )); then { echo "Having trouble" && exit 1; }; fi 
-           
-   
-            
-            
+           echo "Code Coverage: ${code_coverage}% " | bc); then { echo "uploading to codecov" }; fi 
+           if (( $(echo "$code_coverage < $CODE_COVERAGE_TARGET" | bc) )); then { echo "code coverage is less than expected" && exit 1; }; fi                  
         test_report: test-results/flutter.json
 
       - name: Codecov
